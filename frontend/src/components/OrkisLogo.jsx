@@ -1,4 +1,4 @@
-import orkisLogo from "../assets/orkis-logo.png";
+import orkisLogo from "../assets/orkis-orange.png";
 
 export default function OrkisLogo({ size = "md" }) {
   const dims = size === "sm" ? "h-7" : "h-8";

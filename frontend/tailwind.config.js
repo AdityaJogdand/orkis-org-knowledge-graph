@@ -5,6 +5,7 @@ export default {
     extend: {
       fontFamily: {
         display: ["'Fraunces'", "serif"],
+        heading: ["'Space Grotesk'", "sans-serif"],
         sans: ["'Inter'", "sans-serif"],
       },
       colors: {
