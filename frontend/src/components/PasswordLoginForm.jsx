@@ -45,7 +45,7 @@ export default function PasswordLoginForm({ role, onSuccess }) {
         placeholder="Email address*"
         value={formData.email}
         onChange={handleChange}
-        className="w-full px-4 py-3 border border-[rgba(255,109,41,0.2)] rounded-xl bg-[rgba(255,109,41,0.08)] placeholder:text-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-[rgba(255,109,41,0.3)] focus:border-transparent transition"
+        className="w-full px-4 py-3 border border-[#f97316] rounded-xl bg-white placeholder:text-gray-400 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#f97316]/40 focus:border-[#f97316] transition"
       />
 
       <input
@@ -55,7 +55,7 @@ export default function PasswordLoginForm({ role, onSuccess }) {
         placeholder="Password*"
         value={formData.password}
         onChange={handleChange}
-        className="w-full px-4 py-3 border border-[rgba(255,109,41,0.2)] rounded-xl bg-[rgba(255,109,41,0.08)] placeholder:text-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-[rgba(255,109,41,0.3)] focus:border-transparent transition"
+        className="w-full px-4 py-3 border border-[#f97316] rounded-xl bg-white placeholder:text-gray-400 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#f97316]/40 focus:border-[#f97316] transition"
       />
 
       <div className="flex justify-end text-sm">
@@ -64,13 +64,15 @@ export default function PasswordLoginForm({ role, onSuccess }) {
         </a>
       </div>
 
-      <button
-        type="submit"
-        disabled={loading}
-        className="w-full bg-orkis-metallic bg-sheen-size hover:animate-sheen text-white py-3 rounded-xl font-medium text-sm hover:opacity-95 active:scale-[0.99] transition disabled:opacity-50"
-      >
-        {loading ? "Signing in..." : "Sign In"}
-      </button>
+      <div className="rounded-xl ring-2 ring-[#f97316]">
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full bg-[#f97316] hover:bg-[#ea580c] text-white py-3 rounded-xl font-medium text-sm active:scale-[0.99] transition disabled:opacity-50"
+        >
+          {loading ? "Signing in..." : "Sign In"}
+        </button>
+      </div>
     </form>
   );
 }

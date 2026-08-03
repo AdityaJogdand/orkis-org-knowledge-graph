@@ -236,6 +236,7 @@ const CursorGrid = ({
       return [e.clientX - rect.left, e.clientY - rect.top];
     };
 
+    // Listen on window so the grid responds even when behind other elements (z-index:-10)
     const onPointerMove = e => {
       const [x, y] = toLocal(e);
       energize(x, y);
@@ -257,14 +258,14 @@ const CursorGrid = ({
     rebuild();
     wake();
 
-    container.addEventListener('pointermove', onPointerMove);
-    container.addEventListener('pointerdown', onPointerDown);
+    window.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('pointerdown', onPointerDown);
 
     return () => {
       cancelAnimationFrame(raf);
       ro.disconnect();
-      container.removeEventListener('pointermove', onPointerMove);
-      container.removeEventListener('pointerdown', onPointerDown);
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerdown', onPointerDown);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cellSize]);

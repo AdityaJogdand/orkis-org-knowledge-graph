@@ -88,18 +88,20 @@ export default function Login({ onLoginSuccess }) {
                     </button>
                   </div>
 
-                  {/* Forms */}
-                  {mode === "password" ? (
-                    <PasswordLoginForm
-                      role={role}
-                      onSuccess={onLoginSuccess}
-                    />
-                  ) : (
-                    <OtpLoginForm
-                      role={role}
-                      onSuccess={onLoginSuccess}
-                    />
-                  )}
+                  {/* Forms — fixed height so card doesn't resize on mode switch */}
+                  <div className="min-h-[260px]">
+                    {mode === "password" ? (
+                      <PasswordLoginForm
+                        role={role}
+                        onSuccess={onLoginSuccess}
+                      />
+                    ) : (
+                      <OtpLoginForm
+                        role={role}
+                        onSuccess={onLoginSuccess}
+                      />
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
