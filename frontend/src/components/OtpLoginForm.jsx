@@ -79,7 +79,7 @@ export default function OtpLoginForm({ role, onSuccess }) {
           placeholder="College email address*"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-4 py-3 border border-cream-200 rounded-xl bg-cream-50 placeholder:text-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-orkis-500/60 focus:border-transparent transition"
+          className="w-full px-4 py-3 border border-[rgba(255,109,41,0.2)] rounded-xl bg-[rgba(255,109,41,0.08)] placeholder:text-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-[rgba(255,109,41,0.3)] focus:border-transparent transition"
         />
 
         <button

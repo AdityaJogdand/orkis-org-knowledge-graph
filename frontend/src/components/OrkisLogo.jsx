@@ -6,8 +6,8 @@ export default function OrkisLogo({ size = "md" }) {
     <div className="flex items-center gap-2">
       <img src={orkisLogo} alt="Orkis" className={`${dims} w-auto`} />
       <span className="text-lg font-display font-semibold text-orkis-dark tracking-tight">
-        <span className="not-italic">or</span>
-        <span className="italic">kis</span>
+        {/* <span className="not-italic">or</span> */}
+        {/* <span className="italic">kis</span> */}
       </span>
     </div>
   );

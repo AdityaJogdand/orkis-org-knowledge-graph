@@ -45,7 +45,7 @@ export default function PasswordLoginForm({ role, onSuccess }) {
         placeholder="Email address*"
         value={formData.email}
         onChange={handleChange}
-        className="w-full px-4 py-3 border border-cream-200 rounded-xl bg-cream-50 placeholder:text-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-orkis-500/60 focus:border-transparent transition"
+        className="w-full px-4 py-3 border border-[rgba(255,109,41,0.2)] rounded-xl bg-[rgba(255,109,41,0.08)] placeholder:text-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-[rgba(255,109,41,0.3)] focus:border-transparent transition"
       />
 
       <input
@@ -55,7 +55,7 @@ export default function PasswordLoginForm({ role, onSuccess }) {
         placeholder="Password*"
         value={formData.password}
         onChange={handleChange}
-        className="w-full px-4 py-3 border border-cream-200 rounded-xl bg-cream-50 placeholder:text-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-orkis-500/60 focus:border-transparent transition"
+        className="w-full px-4 py-3 border border-[rgba(255,109,41,0.2)] rounded-xl bg-[rgba(255,109,41,0.08)] placeholder:text-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-[rgba(255,109,41,0.3)] focus:border-transparent transition"
       />
 
       <div className="flex justify-end text-sm">

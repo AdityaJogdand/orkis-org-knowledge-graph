@@ -50,12 +50,17 @@ export default {
           "0%": { backgroundPosition: "0% 50%" },
           "100%": { backgroundPosition: "200% 50%" },
         },
+        revolve: {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
       },
       animation: {
         fadeUp: "fadeUp 0.5s ease-out both",
         pulseDot: "pulseDot 2.4s ease-in-out infinite",
         drift: "drift 6s ease-in-out infinite",
         sheen: "sheen 3.5s linear infinite",
+        revolve: "revolve 16s linear infinite",
       },
       backgroundSize: {
         "sheen-size": "220% 100%",
