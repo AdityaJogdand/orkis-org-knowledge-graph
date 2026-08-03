@@ -94,7 +94,7 @@ def send_otp_email(to_email: str, recipient_name: str, otp_code: str) -> None:
           <tr>
             <td style="padding:36px 40px 28px;">
               <p style="margin:0 0 6px;font-size:13px;color:#a8a29e;">Hello</p>
-              <p style="margin:0 0 28px;font-size:16px;font-weight:600;color:#1c1917;">
+              <p style="margin:0 0 28px;font-size:16px;font-weight:600;color:#f97316;">
                 {recipient_name}
               </p>
               <p style="margin:0 0 28px;font-size:14px;color:#78716c;line-height:1.6;">
