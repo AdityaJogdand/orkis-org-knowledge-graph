@@ -16,13 +16,13 @@ export default function OtpLoginForm({ role, onSuccess }) {
     setError("");
     setLoading(true);
     try {
-      const res = await fetch("/api/auth/otp/request", {
+      const res = await fetch("/auth/otp/request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, role }),
+        body: JSON.stringify({ email }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Could not send OTP");
+      if (!res.ok) throw new Error(data.detail || "Could not send OTP");
       setStage("verify");
       start(OTP_TTL_SECONDS);
     } catch (err) {
@@ -41,16 +41,26 @@ export default function OtpLoginForm({ role, onSuccess }) {
     }
     setLoading(true);
     try {
-      const res = await fetch("/api/auth/otp/verify", {
+      const res = await fetch("/auth/otp/verify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp }),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Invalid or expired code");
 
-      localStorage.setItem("orkis_token", data.token);
-      onSuccess?.(data.user);
+      let data;
+      try { data = await res.json(); }
+      catch { throw new Error("Server unreachable. Is the backend running?"); }
+
+      if (!res.ok) throw new Error(data.detail || "Invalid or expired code");
+
+      localStorage.setItem("orkis_token", data.access_token);
+      localStorage.setItem("orkis_refresh", data.refresh_token);
+
+      const meRes = await fetch("/auth/me", {
+        headers: { Authorization: `Bearer ${data.access_token}` },
+      });
+      const user = await meRes.json();
+      onSuccess?.(user);
     } catch (err) {
       setError(err.message);
     } finally {

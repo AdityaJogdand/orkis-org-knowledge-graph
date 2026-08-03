@@ -13,16 +13,26 @@ export default function PasswordLoginForm({ role, onSuccess }) {
     setError("");
     setLoading(true);
     try {
-      const res = await fetch("/api/auth/login/password", {
+      const res = await fetch("/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...formData, role }),
+        body: JSON.stringify({ email: formData.email, password: formData.password }),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Invalid credentials");
 
-      localStorage.setItem("orkis_token", data.token);
-      onSuccess?.(data.user);
+      let data;
+      try { data = await res.json(); }
+      catch { throw new Error("Server unreachable. Is the backend running?"); }
+
+      if (!res.ok) throw new Error(data.detail || "Invalid credentials");
+
+      localStorage.setItem("orkis_token", data.access_token);
+      localStorage.setItem("orkis_refresh", data.refresh_token);
+
+      const meRes = await fetch("/auth/me", {
+        headers: { Authorization: `Bearer ${data.access_token}` },
+      });
+      const user = await meRes.json();
+      onSuccess?.(user);
     } catch (err) {
       setError(err.message);
     } finally {
