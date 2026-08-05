@@ -1,6 +1,58 @@
 @import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
+@theme {
+  --font-display: 'Fraunces', serif;
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-sans: 'Inter', sans-serif;
+
+  --color-cream-50: #FDFCFA;
+  --color-cream-100: #F6F2EA;
+  --color-cream-200: #EFE7D8;
+
+  --color-orkis-50: #FDF1EA;
+  --color-orkis-100: #FBE1D0;
+  --color-orkis-200: #F5C3A3;
+  --color-orkis-300: #EEA476;
+  --color-orkis-400: #E68A5C;
+  --color-orkis-500: #D97757;
+  --color-orkis-600: #C25F3F;
+  --color-orkis-700: #A04A30;
+  --color-orkis-800: #7A3A26;
+  --color-orkis-dark: #231F1A;
+
+  --background-image-orkis-gradient: linear-gradient(135deg, #C25F3F 0%, #D97757 45%, #F0A878 100%);
+  --background-image-orkis-metallic: linear-gradient(120deg, #7A3A26 0%, #C25F3F 22%, #F0A878 42%, #FBD9BC 52%, #EE9B67 62%, #A04A30 82%, #6B2E1D 100%);
+
+  --animate-fadeUp: fadeUp 0.5s ease-out both;
+  --animate-pulseDot: pulseDot 2.4s ease-in-out infinite;
+  --animate-drift: drift 6s ease-in-out infinite;
+  --animate-sheen: sheen 3.5s linear infinite;
+  --animate-revolve: revolve 16s linear infinite;
+
+  @keyframes fadeUp {
+    0% { opacity: 0; transform: translateY(12px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulseDot {
+    0%, 100% { opacity: 0.35; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.4); }
+  }
+  @keyframes drift {
+    0% { transform: translate(0,0); }
+    50% { transform: translate(6px,-8px); }
+    100% { transform: translate(0,0); }
+  }
+  @keyframes sheen {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+  @keyframes revolve {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+}
+
 body {
   font-family: "Inter", sans-serif;
 }
