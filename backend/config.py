@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     database_url: str = "postgresql://postgres:postgres@localhost:5432/org_knowledge_graph"
     jwt_secret: str = "change-me-in-production"
     jwt_algorithm: str = "HS256"
-    access_token_expire_minutes: int = 15
+    access_token_expire_minutes: int = 2
     refresh_token_expire_days: int = 7
     bcrypt_rounds: int = 12
     otp_expire_minutes: int = 10
