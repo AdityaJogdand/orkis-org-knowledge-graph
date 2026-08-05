@@ -4,17 +4,19 @@ import OrkisLogo from "./OrkisLogo";
 import PasswordLoginForm from "./PasswordLoginForm";
 import OtpLoginForm from "./OtpLoginForm";
 // import DotSphere from "./DotSphere";
-// import GradientWaves from "./GradientWaves";
 import GradualBlur from "./GradualBlur";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+
+
 
 export default function Login({ onLoginSuccess }) {
   const [role, setRole] = useState("student");
   const [mode, setMode] = useState("password");
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#F4EFEA]">
+    <div className="relative min-h-screen overflow-hidden bg-[#F4EFEA] flex flex-col">
 
-      {/* Background Gradient Waves */}
+
 
       {/* Scaled Bottom Semi-Circle Dot Sphere */}
       <div className="absolute inset-x-0 -bottom-48 z-10 pointer-events-none flex justify-center">
@@ -29,25 +31,19 @@ export default function Login({ onLoginSuccess }) {
       </div>
 
       {/* Main Container */}
-      <div className="relative z-20 flex flex-col items-center justify-center px-4 pt-2 pb-20">
+      <div className="relative z-20 flex flex-1 flex-col items-center justify-center px-4 py-8 sm:py-12">
 
         {/* Glassy Neumorphic Login Card - Reduced Max Width to max-w-md */}
-        <div className="relative w-full max-w-md animate-[pushUp_1.8s_cubic-bezier(0.16,1,0.3,1)_forwards]">
+        <div className="relative w-full max-w-md animate-[pushUp_1.8s_cubic-bezier(0.16,1,0.3,1)_forwards] flex flex-col items-center">
           {/* Animated Flowing Gradient Outer Border Frame */}
           <div className="relative p-[1.5px] rounded-[34px] overflow-hidden shadow-[-14px_-14px_30px_rgba(255,255,255,0.9),_14px_14px_30px_rgba(195,183,170,0.45)]">
 
             {/* Inner Glassy Card Content - Increased Min-Height and Padding */}
-            <div className="relative flex flex-col justify-between rounded-[32px] bg-[#F4EFEA]/85 backdrop-blur-xl p-8 sm:p-12 min-h-[480px]">
-
-              {/* Header Moved Inside the Modal */}
+            <div className="relative flex flex-col justify-between rounded-[32px] bg-[#F4EFEA]/85 backdrop-blur-xl p-8 sm
+         -:p-12 min-h-[480px]"> 
               <div className="text-center mb-6 animate-fadeUp">
                 <h1 className="font-heading text-3xl font-bold tracking-tight text-orkis-dark flex items-center justify-center gap-2.5">
-                  Sign in to
-                  <img
-                    src="/src/assets/orkis-orange.png"
-                    alt="Orkis"
-                    className="h-8 w-auto"
-                  />
+                  Sign in to Orkis
                 </h1>
 
                 <p className="font-heading text-xs font-medium text-gray-500 mt-2 tracking-widest uppercase">
@@ -117,7 +113,7 @@ export default function Login({ onLoginSuccess }) {
         </div>
 
         {/* Footer */}
-        <p className="text-center text-sm text-gray-500 mt-6 relative z-30">
+        <p className="text-center text-sm text-gray-500 mt-4 relative z-30 animate-[pushUp_1.8s_cubic-bezier(0.16,1,0.3,1)_forwards] opacity-0">
           New to <span className="italic">Orkis</span>?{" "}
           <a
             href="#"
@@ -127,22 +123,16 @@ export default function Login({ onLoginSuccess }) {
           </a>
         </p>
 
+
       </div>
 
-      {/* Gradual Blur Overlay at Bottom */}
-      <GradualBlur
-        target="parent"
-        position="bottom"
-        height="7rem"
-        strength={2}
-        divCount={5}
-        curve="bezier"
-        exponential
-        opacity={1}
-      />
 
       {/* Keyframe Animations */}
       <style>{`
+        @keyframes fadeIn {
+          0% { opacity: 0; }
+          100% { opacity: 1; }
+        }
         @keyframes pushUp {
           0% {
             opacity: 0;
