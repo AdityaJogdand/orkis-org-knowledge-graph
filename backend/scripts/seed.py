@@ -1,80 +1,76 @@
 """
-Seed script: inserts the 4 roles and creates the Associate Dean user.
+Seed script: populates the user_login table with default accounts.
 Run from the repo root:
     python -m backend.scripts.seed
 
-Idempotent: safe to run multiple times. Only prints the password on first run.
+Idempotent: safe to run multiple times. Skips users that already exist.
+
+Default password for all accounts: Nmims@orkis
 """
 
 import sys
 
+import bcrypt
 from sqlalchemy.orm import Session
 
 from backend.config import settings
 from backend.database import SessionLocal
-from backend.models import Role, RefreshToken, User, UserRole
-from backend.auth.service import hash_password
+from backend.models import UserLogin
 
 
-ROLES = [
-    ("associate_dean", "Associate Dean"),
-    ("programme_chair", "Programme Chairperson"),
-    ("faculty", "Faculty"),
-    ("student", "Student"),
+DEFAULT_PASSWORD = "Nmims@orkis"
+
+
+def hash_password(password: str) -> str:
+    salt = bcrypt.gensalt(rounds=settings.bcrypt_rounds)
+    return bcrypt.hashpw(password.encode(), salt).decode()
+
+
+# (email, role)
+SEED_USERS = [
+    ("preeti.gupta@nmims.edu",       "Associate Professor and Associate Dean"),
+    ("shailendra.aote@nmims.edu",    "Associate Professor and Program Chairperson"),
+    ("asha.rawat@nmims.edu",         "Assistant Professor and Program Chairperson"),
+    ("divyang.jadav@nmims.edu",      "Assistant Professor and Program Chairperson"),
+    ("aparna.rao@nmims.edu",         "Associate Professor"),
+    ("aditya.kasar@nmims.edu",       "Assistant Professor"),
+    ("tejaswini.chavan@nmims.edu",   "Assistant Professor"),
+    ("jyoti.verma@nmims.edu",        "Assistant Professor"),
+    ("variza.negi@nmims.edu",        "Assistant Professor"),
+    ("toral.shah@nmims.edu",         "Assistant Professor"),
+    ("ranjit.dhunde@nmims.edu",      "Assistant Professor"),
+    ("sakshi.indolia@nmims.edu",     "Assistant Professor"),
+    ("pratiksha.patil@nmims.edu",    "Assistant Professor"),
+    ("preeti.agarwal@nmims.edu",     "Assistant Professor"),
+    ("padmashri.patil@nmims.edu",    "Assistant Professor"),
+    ("madhura.vyawahare@nmims.edu",  "Assistant Professor"),
+    ("archana.gulati@nmims.edu",     "Assistant Professor"),
+    ("chhaya.dhavale@nmims.edu",     "Assistant Professor"),
+    ("snehal.lohi@nmims.edu",        "Assistant Professor"),
+    ("swati.vaishnav@nmims.edu",     "Assistant Professor"),
+    ("sulochana.devi@nmims.edu",     "Assistant Professor"),
+    ("namrata.singh@nmims.edu",      "Assistant Professor"),
 ]
 
 
-def _password_from_email(email: str) -> str:
-    """Derive password from name.surname@domain → Name@Surname123"""
-    local = email.split("@")[0]          # e.g. "preeti.gupta"
-    parts = local.split(".")
-    if len(parts) >= 2:
-        name, surname = parts[0].capitalize(), parts[1].capitalize()
-    else:
-        name, surname = parts[0].capitalize(), "User"
-    return f"{name}@{surname}123"
-
-
 def seed(db: Session) -> None:
-    # 1. Insert roles (idempotent)
-    for code, label in ROLES:
-        if not db.query(Role).filter_by(code=code).first():
-            db.add(Role(code=code, label=label))
-    db.commit()
+    hashed = hash_password(DEFAULT_PASSWORD)
 
-    # 2. Check if dean already exists
-    dean_email = settings.dean_email.lower()
-    existing = db.query(User).filter_by(email=dean_email).first()
-    if existing:
-        print(f"\nAssociate Dean '{dean_email}' already exists — password unchanged.\n")
-        return
-
-    # 3. Derive password from email (name.surname@domain → Name@Surname123)
-    plain_password = _password_from_email(dean_email)
-    hashed = hash_password(plain_password)
-
-    # 4. Create user
-    dean = User(
-        email=dean_email,
-        password_hash=hashed,
-        full_name="Associate Dean",
-        is_active=True,
-    )
-    db.add(dean)
-    db.flush()  # get dean.id before commit
-
-    # 5. Assign role
-    role = db.query(Role).filter_by(code="associate_dean").first()
-    db.add(UserRole(user_id=dean.id, role_id=role.id))
-    db.commit()
-
-    # 6. Print credentials once — this is the ONLY time the plaintext appears
     print()
     print("=" * 60)
-    print("  ASSOCIATE DEAN — FIRST-TIME LOGIN")
-    print(f"  email:    {dean_email}")
-    print(f"  password: {plain_password}")
-    print("  NOTE: shown once. Change it after first login.")
+    print("  SEEDING USER_LOGIN")
+    print("=" * 60)
+
+    for email, role in SEED_USERS:
+        if db.query(UserLogin).filter_by(email=email).first():
+            print(f"  SKIP   {email} (already exists)")
+            continue
+        db.add(UserLogin(email=email, password=hashed, role=role))
+        db.commit()
+        print(f"  CREATE {email}  |  role: {role}")
+
+    print("=" * 60)
+    print(f"  Default password: {DEFAULT_PASSWORD}")
     print("=" * 60)
     print()
 
