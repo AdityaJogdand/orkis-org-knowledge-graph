@@ -43,7 +43,7 @@ export default function PasswordLoginForm({ role, onSuccess }) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4 animate-fadeUp">
       {error && (
-        <div className="rounded-lg bg-red-50 text-red-600 text-sm px-4 py-2 border border-red-200">
+        <div className="rounded-lg bg-red-50 text-red-600 text-sm px- py-2 border border-red-200">
           {error}
         </div>
       )}
@@ -68,11 +68,11 @@ export default function PasswordLoginForm({ role, onSuccess }) {
         className="w-full px-4 py-3 border border-[#f97316] rounded-xl bg-white placeholder:text-gray-400 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#f97316]/40 focus:border-[#f97316] transition"
       />
 
-      <div className="flex justify-end text-sm">
+      {/* <div className="flex justify-end text-sm">
         <a href="#" className="text-orkis-600 hover:underline italic">
           Forgot password?
         </a>
-      </div>
+      </div> */}
 
       <div className="rounded-xl ring-2 ring-[#f97316]">
         <button

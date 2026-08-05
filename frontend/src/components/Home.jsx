@@ -14,7 +14,7 @@ const ROLE_COLOR = {
   student: "bg-orange-100 text-orange-700",
 };
 
-export default function Home({ user, onLogout }) {
+export default function Home({ user, onLogout, onOpenMap }) {
   const handleLogout = () => {
     localStorage.removeItem("orkis_token");
     localStorage.removeItem("orkis_refresh");
@@ -62,12 +62,13 @@ export default function Home({ user, onLogout }) {
         {/* Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-10">
           {[
-            { label: "Knowledge Graph", desc: "Explore institutional connections", icon: "🕸️", soon: false },
+            { label: "Knowledge Graph", desc: "Explore institutional connections", icon: "🕸️", soon: false, action: onOpenMap },
             { label: "Smart Query", desc: "Ask anything about your institution", icon: "🔍", soon: false },
             { label: "Cognitive Load", desc: "Adaptive information delivery", icon: "🧠", soon: true },
           ].map((card) => (
             <div
               key={card.label}
+              onClick={card.action}
               className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md hover:border-[#f97316]/30 transition cursor-pointer relative"
             >
               {card.soon && (
