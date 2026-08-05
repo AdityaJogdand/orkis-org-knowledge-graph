@@ -1,6 +1,6 @@
 -- ─── Seed: Associate Dean — Dr. Preeti Gupta ─────────────────────────────────
 -- Role   : associate_dean  (rank 1 — broadest / full institute-wide access)
--- Email  : preeti.gupta@college.edu
+-- Email  : preeti.gupta@nmims.edu
 -- Password (temporary, must be changed on first login): PreetiDean@2024
 -- ─────────────────────────────────────────────────────────────────────────────
 
@@ -18,7 +18,7 @@ BEGIN
         is_email_verified
     )
     VALUES (
-        'preeti.gupta@college.edu',
+        'preeti.gupta@nmims.edu',
         crypt('PreetiDean@2024', gen_salt('bf', 12)),
         'Dr. Preeti Gupta',
         TRUE,
@@ -29,7 +29,7 @@ BEGIN
 
     -- If the row already existed, fetch its id
     IF v_user_id IS NULL THEN
-        SELECT id INTO v_user_id FROM users WHERE email = 'preeti.gupta@college.edu';
+        SELECT id INTO v_user_id FROM users WHERE email = 'preeti.gupta@nmims.edu';
     END IF;
 
     -- 2. Resolve the associate_dean role id

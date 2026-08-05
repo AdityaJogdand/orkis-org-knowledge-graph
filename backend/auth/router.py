@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from ..config import settings
@@ -70,17 +70,16 @@ def me(current_user: User = Depends(get_current_user)):
 
 
 @router.post("/otp/request", status_code=status.HTTP_202_ACCEPTED)
-def otp_request(data: OtpRequestIn, db: Session = Depends(get_db)):
+def otp_request(data: OtpRequestIn, background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
     """Step 1 — request an OTP for the given email.
 
     Always returns 202 (so callers cannot enumerate registered emails).
-    The OTP is printed to the server console; wire a real email/SMS
-    provider here for production.
+    Email is sent in the background so the response returns immediately.
     """
     user = service.get_user_by_email(data.email, db)
     if user and user.is_active:
         code = service.generate_and_store_otp(user, db)
-        send_otp_email(user.email, user.full_name, code)
+        background_tasks.add_task(send_otp_email, user.email, user.full_name, code)
     return {"detail": "If that email is registered, an OTP has been sent."}
 
 
