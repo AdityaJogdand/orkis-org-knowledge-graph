@@ -26,17 +26,6 @@ class ChangePasswordIn(BaseModel):
 class UserOut(BaseModel):
     id: UUID
     email: str
-    full_name: str
-    roles: list[str]
-    is_active: bool
+    role: str
 
     model_config = {"from_attributes": True}
-
-
-class OtpRequestIn(BaseModel):
-    email: str
-
-
-class OtpVerifyIn(BaseModel):
-    email: str
-    otp: str
