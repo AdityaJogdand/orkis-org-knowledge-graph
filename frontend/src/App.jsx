@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Login from "./components/Login";
-import Home from "./components/Home";
+import Home from "./pages/Home";
 import MemoryMap from "./components/MemoryMap";
 
 function App() {
-  const [mapOpen, setMapOpen] = useState(false);
   const [user, setUser] = useState(() => {
     const token = localStorage.getItem("orkis_token");
     const stored = localStorage.getItem("orkis_user");
@@ -13,50 +13,44 @@ function App() {
     }
     return null;
   });
-  const [visible, setVisible] = useState(true);
-  const [pendingUser, setPendingUser] = useState(null);
+  const [mapOpen, setMapOpen] = useState(false);
 
   const handleLoginSuccess = (userData) => {
-    setVisible(false);
-    setPendingUser(userData);
+    localStorage.setItem("orkis_user", JSON.stringify(userData));
+    setUser(userData);
   };
 
   const handleLogout = () => {
-    setMapOpen(false);
-    setVisible(false);
-    setTimeout(() => {
-      localStorage.removeItem("orkis_user");
-      setUser(null);
-      setVisible(true);
-    }, 350);
+    ["orkis_token", "orkis_refresh", "orkis_user"].forEach(k => localStorage.removeItem(k));
+    setUser(null);
   };
 
-  useEffect(() => {
-    if (!visible && pendingUser) {
-      const t = setTimeout(() => {
-        localStorage.setItem("orkis_user", JSON.stringify(pendingUser));
-        setUser(pendingUser);
-        setPendingUser(null);
-        setVisible(true);
-      }, 350);
-      return () => clearTimeout(t);
-    }
-  }, [visible, pendingUser]);
-
   return (
-    <div
-      style={{
-        opacity: visible ? 1 : 0,
-        transition: "opacity 350ms ease",
-      }}
-    >
-      {user
-        ? <Home user={user} onLogout={handleLogout} onOpenMap={() => setMapOpen(true)} />
-        : <Login onLoginSuccess={handleLoginSuccess} />
-      }
-      {/* MemoryMap mounts outside the fade-div so it covers the full viewport */}
-      {user && mapOpen && <MemoryMap onBack={() => setMapOpen(false)} />}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        {/* Public — redirect to /home if already logged in */}
+        <Route
+          path="/login"
+          element={user ? <Navigate to="/home" replace /> : <Login onLoginSuccess={handleLoginSuccess} />}
+        />
+
+        {/* Protected — redirect to /login if not logged in */}
+        <Route
+          path="/home"
+          element={
+            user
+              ? <>
+                  <Home user={user} onLogout={handleLogout} onOpenMap={() => setMapOpen(true)} />
+                  {mapOpen && <MemoryMap onBack={() => setMapOpen(false)} />}
+                </>
+              : <Navigate to="/login" replace />
+          }
+        />
+
+        {/* Default */}
+        <Route path="*" element={<Navigate to={user ? "/home" : "/login"} replace />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
