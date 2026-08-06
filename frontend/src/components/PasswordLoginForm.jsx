@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Loader from "./Loader";
 
 export default function PasswordLoginForm({ onSuccess, onError }) {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -66,15 +67,18 @@ export default function PasswordLoginForm({ onSuccess, onError }) {
         </a>
       </div> */}
 
-      <div className="rounded-xl ring-2 ring-[#f97316]">
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-[#f97316] hover:bg-[#ea580c] text-white py-3 rounded-xl font-medium text-sm active:scale-[0.99] transition disabled:opacity-50"
-        >
-          {loading ? "Signing in..." : "Sign In"}
-        </button>
-      </div>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="rounded-xl ring-2 ring-[#f97316]">
+          <button
+            type="submit"
+            className="w-full bg-[#f97316] hover:bg-[#ea580c] text-white py-3 rounded-xl font-medium text-sm active:scale-[0.99] transition"
+          >
+            Sign In
+          </button>
+        </div>
+      )}
     </form>
   );
 }
