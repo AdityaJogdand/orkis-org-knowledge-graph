@@ -1,17 +1,15 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import OrkisLogo from "./OrkisLogo";
-// import RoleSidebar from "./RoleSidebar";
 import PasswordLoginForm from "./PasswordLoginForm";
 import OtpLoginForm from "./OtpLoginForm";
-// import DotSphere from "./DotSphere";
-import GradualBlur from "./GradualBlur";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-
-
+import Toast from "./Toast";
 
 export default function Login({ onLoginSuccess }) {
-  const [role, setRole] = useState("student");
   const [mode, setMode] = useState("password");
+  const [toast, setToast] = useState("");
+
+  const handleError = useCallback((msg) => setToast(msg), []);
+  const dismissToast = useCallback(() => setToast(""), []);
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#F4EFEA] flex flex-col">
@@ -33,17 +31,36 @@ export default function Login({ onLoginSuccess }) {
       {/* Main Container */}
       <div className="relative z-20 flex flex-1 flex-col items-center justify-center px-4 py-8 sm:py-12">
 
-        {/* Glassy Neumorphic Login Card - Reduced Max Width to max-w-md */}
-        <div className="relative w-full max-w-md animate-[pushUp_1.8s_cubic-bezier(0.16,1,0.3,1)_forwards] flex flex-col items-center">
-          {/* Animated Flowing Gradient Outer Border Frame */}
-          <div className="relative p-[1.5px] rounded-[34px] overflow-hidden shadow-[-14px_-14px_30px_rgba(255,255,255,0.9),_14px_14px_30px_rgba(195,183,170,0.45)]">
+        {/* Login Card */}
+        <div className="relative w-[55vw] min-w-[520px] animate-[pushUp_1.8s_cubic-bezier(0.16,1,0.3,1)_forwards]">
+          <Toast message={toast} onDismiss={dismissToast} />
+          <div className="relative rounded-[44px] overflow-hidden shadow-[-14px_-14px_30px_rgba(255,255,255,0.9),_14px_14px_30px_rgba(195,183,170,0.45)] flex">
 
-            {/* Inner Glassy Card Content - Increased Min-Height and Padding */}
-            <div className="relative flex flex-col justify-between rounded-[32px] bg-[#F4EFEA]/85 backdrop-blur-xl p-8 sm
-         -:p-12 min-h-[480px]"> 
+            {/* Orange patch — rounded rectangle with margin */}
+            <div className="flex-shrink-0 flex items-center py-4 pl-3">
+              <div className="w-80 h-full bg-[#f97316] rounded-[28px] relative overflow-hidden flex flex-col justify-between px-6 pt-8 pb-0">
+                {/* Header */}
+                <div>
+                  <p className="text-white/70 text-xs font-semibold tracking-widest uppercase mb-2">Welcome to Orkis</p>
+                  <h2 className="font-heading text-white text-2xl font-bold leading-snug">
+                    Your institution,<br />connected.
+                  </h2>
+                </div>
+
+                {/* SVG pushed to bottom */}
+                <img
+                  src="/src/assets/education.svg"
+                  alt=""
+                  className="w-full scale-135 object-contain object-bottom self-end"
+                />
+              </div>
+            </div>
+
+            {/* Card Content */}
+            <div className="relative flex flex-col justify-between bg-[#F4EFEA] p-8 sm:p-12 min-h-[480px] flex-1">
               <div className="text-center mb-6 animate-fadeUp">
                 <h1 className="font-heading text-3xl font-bold tracking-tight text-orkis-dark flex items-center justify-center gap-2.5">
-                  Sign in to Orkis
+                  Sign in to <span className="text-[#f97316]">Orkis</span>
                 </h1>
 
                 <p className="font-heading text-xs font-medium text-gray-500 mt-2 tracking-widest uppercase">
@@ -62,8 +79,8 @@ export default function Login({ onLoginSuccess }) {
                     {mode === "password" ? (
                       <div>
                         <PasswordLoginForm
-                          role={role}
                           onSuccess={onLoginSuccess}
+                          onError={handleError}
                         />
 
                         {/* Forgot Password & Switch to OTP Links */}
@@ -87,8 +104,8 @@ export default function Login({ onLoginSuccess }) {
                     ) : (
                       <div>
                         <OtpLoginForm
-                          role={role}
                           onSuccess={onLoginSuccess}
+                          onError={handleError}
                         />
 
                         {/* Switch Back to Password Link */}

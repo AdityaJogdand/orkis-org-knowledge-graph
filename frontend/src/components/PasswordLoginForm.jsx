@@ -1,8 +1,7 @@
 import { useState } from "react";
 
-export default function PasswordLoginForm({ role, onSuccess }) {
+export default function PasswordLoginForm({ onSuccess, onError }) {
   const [formData, setFormData] = useState({ email: "", password: "" });
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) =>
@@ -10,7 +9,6 @@ export default function PasswordLoginForm({ role, onSuccess }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
     setLoading(true);
     try {
       const res = await fetch("/auth/login", {
@@ -34,7 +32,7 @@ export default function PasswordLoginForm({ role, onSuccess }) {
       const user = await meRes.json();
       onSuccess?.(user);
     } catch (err) {
-      setError(err.message);
+      onError?.(err.message);
     } finally {
       setLoading(false);
     }
@@ -42,12 +40,6 @@ export default function PasswordLoginForm({ role, onSuccess }) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 animate-fadeUp">
-      {error && (
-        <div className="rounded-lg bg-red-50 text-red-600 text-sm px- py-2 border border-red-200">
-          {error}
-        </div>
-      )}
-
       <input
         type="email"
         name="email"

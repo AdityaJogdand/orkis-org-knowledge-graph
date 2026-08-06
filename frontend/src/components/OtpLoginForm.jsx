@@ -4,16 +4,14 @@ import useCountdown from "../hooks/useCountdown";
 
 const OTP_TTL_SECONDS = 10 * 60;
 
-export default function OtpLoginForm({ role, onSuccess }) {
+export default function OtpLoginForm({ onSuccess, onError }) {
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [stage, setStage] = useState("request");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { formatted, start, isActive } = useCountdown();
 
   const requestOtp = async () => {
-    setError("");
     setLoading(true);
     try {
       const res = await fetch("/auth/otp/request", {
@@ -26,7 +24,7 @@ export default function OtpLoginForm({ role, onSuccess }) {
       setStage("verify");
       start(OTP_TTL_SECONDS);
     } catch (err) {
-      setError(err.message);
+      onError?.(err.message);
     } finally {
       setLoading(false);
     }
@@ -34,9 +32,8 @@ export default function OtpLoginForm({ role, onSuccess }) {
 
   const verifyOtp = async (e) => {
     e.preventDefault();
-    setError("");
     if (otp.length !== 6) {
-      setError("Enter the full 6-digit code");
+      onError?.("Enter the full 6-digit code");
       return;
     }
     setLoading(true);
@@ -62,7 +59,7 @@ export default function OtpLoginForm({ role, onSuccess }) {
       const user = await meRes.json();
       onSuccess?.(user);
     } catch (err) {
-      setError(err.message);
+      onError?.(err.message);
     } finally {
       setLoading(false);
     }
@@ -71,18 +68,9 @@ export default function OtpLoginForm({ role, onSuccess }) {
   if (stage === "request") {
     return (
       <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          requestOtp();
-        }}
+        onSubmit={(e) => { e.preventDefault(); requestOtp(); }}
         className="space-y-4 animate-fadeUp"
       >
-        {error && (
-          <div className="rounded-lg bg-red-50 text-red-600 text-sm px-4 py-2 border border-red-200">
-            {error}
-          </div>
-        )}
-
         <input
           type="email"
           required
@@ -107,12 +95,6 @@ export default function OtpLoginForm({ role, onSuccess }) {
 
   return (
     <form onSubmit={verifyOtp} className="space-y-4 animate-fadeUp">
-      {error && (
-        <div className="rounded-lg bg-red-50 text-red-600 text-sm px-4 py-2 border border-red-200">
-          {error}
-        </div>
-      )}
-
       <p className="text-sm text-gray-500">
         Code sent to <span className="text-orkis-dark font-medium not-italic">{email}</span>
       </p>
