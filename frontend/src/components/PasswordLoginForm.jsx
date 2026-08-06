@@ -20,7 +20,7 @@ export default function PasswordLoginForm({ onSuccess, onError }) {
 
       let data;
       try { data = await res.json(); }
-      catch { throw new Error("Server unreachable. Is the backend running?"); }
+      catch { throw new Error("Please check your internet connection."); }
 
       if (!res.ok) throw new Error(data.detail || "Invalid credentials");
 
@@ -61,11 +61,6 @@ export default function PasswordLoginForm({ onSuccess, onError }) {
         className="w-full px-4 py-3 border border-[#f97316] rounded-xl bg-white placeholder:text-gray-400 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#f97316]/40 focus:border-[#f97316] transition"
       />
 
-      {/* <div className="flex justify-end text-sm">
-        <a href="#" className="text-orkis-600 hover:underline italic">
-          Forgot password?
-        </a>
-      </div> */}
 
       {loading ? (
         <Loader />

@@ -3,13 +3,24 @@ import OrkisLogo from "./OrkisLogo";
 import PasswordLoginForm from "./PasswordLoginForm";
 import OtpLoginForm from "./OtpLoginForm";
 import Toast from "./Toast";
+import Loader from "./Loader";
 
 export default function Login({ onLoginSuccess }) {
   const [mode, setMode] = useState("password");
   const [toast, setToast] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleError = useCallback((msg) => setToast(msg), []);
+  const handleError = useCallback((msg) => { setLoading(false); setToast(msg); }, []);
   const dismissToast = useCallback(() => setToast(""), []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#F4EFEA]">
+        <Loader />
+        <p className="text-sm text-gray-400 mt-2 font-medium">Signing you in…</p>
+      </div>
+    );
+  }
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#F4EFEA] flex flex-col">
@@ -81,6 +92,7 @@ export default function Login({ onLoginSuccess }) {
                         <PasswordLoginForm
                           onSuccess={onLoginSuccess}
                           onError={handleError}
+                          onLoading={setLoading}
                         />
 
                         {/* Forgot Password & Switch to OTP Links */}
