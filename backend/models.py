@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime, time, timezone
 
-from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, String, Text
+from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, SmallInteger, String, Text, Time
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -60,6 +60,7 @@ class Subject(Base):
         UUID(as_uuid=True), ForeignKey("programmes.id", ondelete="CASCADE"), nullable=False
     )
     name: Mapped[str] = mapped_column(String(255), nullable=False)
+    code: Mapped[str | None] = mapped_column(String(32), nullable=True)
     semester_number: Mapped[int] = mapped_column(Integer, nullable=False)
     category: Mapped[str] = mapped_column(String(32), nullable=False, default="Core")
 
@@ -84,3 +85,57 @@ class FacultyWorkload(Base):
 
     subject: Mapped[Subject] = relationship("Subject", back_populates="workloads")
     user: Mapped[UserLogin | None] = relationship("UserLogin", back_populates="workloads")
+
+
+class FacultyMember(Base):
+    __tablename__ = "faculty_members"
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    code: Mapped[str] = mapped_column(String(16), unique=True, nullable=False)
+    full_name: Mapped[str] = mapped_column(String(120), nullable=False)
+    faculty_type: Mapped[str] = mapped_column(String(16), nullable=False, default="Core")
+    weekly_hours_total: Mapped[int | None] = mapped_column(SmallInteger, nullable=True)
+    user_login_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("user_login.id", ondelete="SET NULL"), nullable=True
+    )
+    chaired_programme_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("programmes.id", ondelete="SET NULL"), nullable=True
+    )
+
+
+class Venue(Base):
+    __tablename__ = "venues"
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    code: Mapped[str] = mapped_column(String(16), unique=True, nullable=False)
+    label: Mapped[str] = mapped_column(String(32), nullable=False)
+    venue_type: Mapped[str] = mapped_column(String(16), nullable=False)
+
+
+class TimetableSlot(Base):
+    __tablename__ = "timetable_slots"
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    academic_year: Mapped[str] = mapped_column(String(16), nullable=False, default="2026-27")
+    programme_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("programmes.id", ondelete="SET NULL"), nullable=True
+    )
+    semester_number: Mapped[int] = mapped_column(SmallInteger, nullable=False)
+    division: Mapped[str | None] = mapped_column(String(4), nullable=True)
+    day_of_week: Mapped[str] = mapped_column(String(16), nullable=False)
+    slot_start: Mapped[time] = mapped_column(Time, nullable=False)
+    slot_end: Mapped[time] = mapped_column(Time, nullable=False)
+    subject_code: Mapped[str | None] = mapped_column(String(32), nullable=True)
+    subject_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("subjects.id", ondelete="SET NULL"), nullable=True
+    )
+    faculty_code: Mapped[str | None] = mapped_column(String(16), nullable=True)
+    faculty_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("faculty_members.id", ondelete="SET NULL"), nullable=True
+    )
+    venue_label: Mapped[str | None] = mapped_column(String(32), nullable=True)
+    venue_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("venues.id", ondelete="SET NULL"), nullable=True
+    )
+    batch: Mapped[str | None] = mapped_column(String(8), nullable=True)
+    slot_type: Mapped[str] = mapped_column(String(16), nullable=False, default="Lecture")

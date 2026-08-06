@@ -1,8 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session  # noqa: F401 — used by Depends
+
+import re
 
 from ..database import get_db
-from ..models import UserLogin
+from ..models import FacultyMember, Programme, UserLogin
 from . import service
 from .dependencies import get_current_user
 from .schemas import ChangePasswordIn, LoginIn, RefreshIn, TokenPairOut, UserOut
@@ -45,8 +47,28 @@ def logout(data: RefreshIn, db: Session = Depends(get_db)):
 
 
 @router.get("/me", response_model=UserOut)
-def me(current_user: UserLogin = Depends(get_current_user)):
-    return current_user
+def me(current_user: UserLogin = Depends(get_current_user), db: Session = Depends(get_db)):
+    faculty = db.query(FacultyMember).filter(FacultyMember.user_login_id == current_user.id).first()
+
+    title = ""
+    chaired_programme = ""
+
+    if faculty:
+        m = re.match(r"^(Dr\.|Prof\.)\s", faculty.full_name)
+        if m:
+            title = m.group(1)
+        if faculty.chaired_programme_id:
+            prog = db.get(Programme, faculty.chaired_programme_id)
+            if prog:
+                chaired_programme = prog.name
+
+    return UserOut(
+        id=current_user.id,
+        email=current_user.email,
+        role=current_user.role,
+        title=title,
+        chaired_programme=chaired_programme,
+    )
 
 
 @router.post("/change-password")

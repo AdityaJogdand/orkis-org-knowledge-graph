@@ -27,5 +27,7 @@ class UserOut(BaseModel):
     id: UUID
     email: str
     role: str
+    title: str = ""              # "Dr." / "Prof."
+    chaired_programme: str = ""  # e.g. "B.Tech AI&DS" — set for Programme Chairpersons
 
     model_config = {"from_attributes": True}
