@@ -24,5 +24,13 @@ class Settings(BaseSettings):
         return self.smtp_password.strip()
     smtp_from: str = ""      # defaults to smtp_user if blank
 
+    # CORS — comma-separated origins, e.g. "http://localhost:5173,http://192.168.1.5:5173"
+    # Set to "*" to allow all origins (dev only)
+    cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173"
+
+    @property
+    def cors_origin_list(self) -> list[str]:
+        return [o.strip() for o in self.cors_origins.split(",") if o.strip()]
+
 
 settings = Settings()

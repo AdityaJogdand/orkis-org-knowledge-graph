@@ -22,7 +22,7 @@ function FacultyCell({ faculty = [] }) {
 
   if (uniqueFaculty.length === 0) {
     return (
-      <span className="inline-flex items-center gap-1.5 font-sans text-[10px] font-medium text-red-500">
+      <span className="inline-flex items-center gap-1.5 font-sans text-[13px] font-medium text-red-500">
         <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
         Unassigned
       </span>
@@ -54,7 +54,7 @@ function FacultyCell({ faculty = [] }) {
               border
               whitespace-nowrap
               font-sans
-              text-[9px]
+              text-[12px]
               font-medium
               ${
                 visiting
@@ -92,7 +92,7 @@ function FacultyCell({ faculty = [] }) {
             rounded-md
             bg-stone-100
             font-sans
-            text-[8px]
+            text-[11px]
             font-semibold
             text-stone-500
           "
@@ -154,7 +154,7 @@ function SemesterItem({
             }
           `}
         >
-          <span className="font-heading text-[11px] font-semibold">
+          <span className="font-heading text-[13px] font-semibold">
             {semester}
           </span>
         </div>
@@ -163,7 +163,7 @@ function SemesterItem({
           <p
             className={`
               font-sans
-              text-[11px]
+              text-[13px]
               font-semibold
               ${
                 active
@@ -178,7 +178,7 @@ function SemesterItem({
           <p
             className={`
               font-sans
-              text-[9px]
+              text-[11px]
               mt-1
               ${
                 active
@@ -233,15 +233,15 @@ function SemesterHeader({
       <div className="flex items-center justify-between gap-5">
         <div className="min-w-0">
           <div className="flex items-center gap-2 mb-1.5">
-            <span className="font-sans text-[8px] uppercase tracking-[0.16em] font-semibold text-stone-400">
+            <span className="font-sans text-[11px] uppercase tracking-[0.16em] font-semibold text-stone-400">
               Curriculum
             </span>
 
-            <span className="text-stone-300 text-[9px]">
+            <span className="text-stone-300 text-[12px]">
               /
             </span>
 
-            <span className="font-sans text-[8px] text-stone-400">
+            <span className="font-sans text-[11px] text-stone-400">
               Semester {semester}
             </span>
           </div>
@@ -251,7 +251,7 @@ function SemesterHeader({
               Semester {semester}
             </h2>
 
-            <span className="font-sans text-[10px] text-stone-400">
+            <span className="font-sans text-[13px] text-stone-400">
               {subjects.length} subjects
             </span>
           </div>
@@ -271,12 +271,12 @@ function SemesterHeader({
                     }}
                   />
 
-                  <span className="font-sans text-[8px] text-stone-500">
+                  <span className="font-sans text-[11px] text-stone-500">
                     {CATEGORY_SHORT[category] ??
                       category}
                   </span>
 
-                  <span className="font-sans text-[8px] font-semibold text-stone-700">
+                  <span className="font-sans text-[11px] font-semibold text-stone-700">
                     {count}
                   </span>
                 </span>
@@ -287,21 +287,21 @@ function SemesterHeader({
 
         <div className="flex items-center gap-2 shrink-0">
           <div className="rounded-xl border border-emerald-100 bg-emerald-50 px-3 py-2">
-            <p className="font-sans text-[7px] uppercase tracking-[0.12em] font-semibold text-emerald-500">
+            <p className="font-sans text-[10px] uppercase tracking-[0.12em] font-semibold text-emerald-500">
               Assigned
             </p>
 
-            <p className="font-heading text-[17px] leading-none font-semibold text-emerald-700 mt-1">
+            <p className="font-heading text-[20px] leading-none font-semibold text-emerald-700 mt-1">
               {assigned}
             </p>
           </div>
 
           <div className="rounded-xl border border-red-100 bg-red-50 px-3 py-2">
-            <p className="font-sans text-[7px] uppercase tracking-[0.12em] font-semibold text-red-400">
+            <p className="font-sans text-[10px] uppercase tracking-[0.12em] font-semibold text-red-400">
               Open
             </p>
 
-            <p className="font-heading text-[17px] leading-none font-semibold text-red-600 mt-1">
+            <p className="font-heading text-[20px] leading-none font-semibold text-red-600 mt-1">
               {open}
             </p>
           </div>
@@ -328,25 +328,25 @@ function CurriculumTable({
             <thead className="sticky top-0 z-10">
               <tr className="bg-[#F1F0ED] border-b border-stone-200">
                 <th className="w-[52px] px-4 py-3 text-left">
-                  <span className="font-sans text-[8px] uppercase tracking-[0.14em] font-semibold text-stone-400">
+                  <span className="font-sans text-[11px] uppercase tracking-[0.14em] font-semibold text-stone-400">
                     #
                   </span>
                 </th>
 
                 <th className="w-[42%] px-3 py-3 text-left">
-                  <span className="font-sans text-[8px] uppercase tracking-[0.14em] font-semibold text-stone-400">
+                  <span className="font-sans text-[11px] uppercase tracking-[0.14em] font-semibold text-stone-400">
                     Subject
                   </span>
                 </th>
 
                 <th className="w-[17%] px-3 py-3 text-left">
-                  <span className="font-sans text-[8px] uppercase tracking-[0.14em] font-semibold text-stone-400">
+                  <span className="font-sans text-[11px] uppercase tracking-[0.14em] font-semibold text-stone-400">
                     Category
                   </span>
                 </th>
 
                 <th className="px-3 py-3 text-left">
-                  <span className="font-sans text-[8px] uppercase tracking-[0.14em] font-semibold text-stone-400">
+                  <span className="font-sans text-[11px] uppercase tracking-[0.14em] font-semibold text-stone-400">
                     Faculty
                   </span>
                 </th>
@@ -370,19 +370,19 @@ function CurriculumTable({
                   "
                 >
                   <td className="px-4 py-3 align-middle">
-                    <span className="font-mono text-[9px] text-stone-400 tabular-nums">
+                    <span className="font-mono text-[12px] text-stone-400 tabular-nums">
                       {String(index + 1).padStart(2, "0")}
                     </span>
                   </td>
 
                   <td className="px-3 py-3 align-middle">
                     <div className="min-w-0 pr-4">
-                      <p className="font-sans text-[12px] font-medium text-stone-800 leading-snug">
+                      <p className="font-sans text-[14px] font-medium text-stone-800 leading-snug">
                         {subject.name}
                       </p>
 
                       {subject.code && (
-                        <p className="font-mono text-[8px] tracking-wide text-stone-400 mt-1">
+                        <p className="font-mono text-[11px] tracking-wide text-stone-400 mt-1">
                           {subject.code}
                         </p>
                       )}
@@ -406,14 +406,14 @@ function CurriculumTable({
           </table>
 
           <div className="h-8 px-4 bg-[#FAFAF9] border-t border-stone-100 flex items-center justify-between">
-            <span className="font-sans text-[8px] text-stone-400">
+            <span className="font-sans text-[11px] text-stone-400">
               {searchQuery
                 ? `Showing ${subjects.length} matching subjects`
                 : `Showing ${subjects.length} of ${totalSubjects} subjects`}
             </span>
 
             {searchQuery && (
-              <span className="font-sans text-[8px] text-stone-400">
+              <span className="font-sans text-[11px] text-stone-400">
                 Filter: "{searchQuery}"
               </span>
             )}
@@ -445,11 +445,11 @@ function CurriculumTable({
               </svg>
             </div>
 
-            <p className="font-sans text-[11px] font-medium text-stone-600">
+            <p className="font-sans text-[14px] font-medium text-stone-600">
               No subjects found
             </p>
 
-            <p className="font-sans text-[9px] text-stone-400 mt-1">
+            <p className="font-sans text-[12px] text-stone-400 mt-1">
               Try another subject, code or faculty name.
             </p>
           </div>
@@ -589,7 +589,7 @@ export default function ProgrammeOverview({
   return (
     <section
       ref={containerRef}
-      className="w-full px-3 md:px-6 py-12 md:py-16"
+      className="w-full py-6"
     >
       {/* =================================================
           BLACK MODAL
@@ -598,12 +598,12 @@ export default function ProgrammeOverview({
       <div
         className={`
           mx-auto
-          w-[97vw]
+          w-full
           max-w-[1500px]
 
-          h-[88vh]
-          min-h-[640px]
-          max-h-[900px]
+          h-[90vh]
+          min-h-[700px]
+          max-h-[1100px]
 
           rounded-[30px]
           overflow-hidden
@@ -638,7 +638,7 @@ export default function ProgrammeOverview({
               <div className="flex items-center gap-2 mb-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-white" />
 
-                <span className="font-sans text-[9px] uppercase tracking-[0.18em] font-semibold text-white/35">
+                <span className="font-sans text-[11px] uppercase tracking-[0.18em] font-semibold text-white/35">
                   Programme Overview
                 </span>
               </div>
@@ -648,7 +648,7 @@ export default function ProgrammeOverview({
                   Curriculum Structure
                 </h1>
 
-                <span className="hidden sm:block font-sans text-[10px] text-white/25">
+                <span className="hidden sm:block font-sans text-[13px] text-white/25">
                   B.Tech AI&DS
                 </span>
               </div>
@@ -691,11 +691,11 @@ export default function ProgrammeOverview({
 
           <aside className="hidden md:flex w-[230px] shrink-0 bg-[#0B0B0B] border-r border-white/[0.07] flex-col">
             <div className="px-5 pt-5 pb-3 flex items-center justify-between">
-              <span className="font-sans text-[9px] uppercase tracking-[0.16em] font-semibold text-white/30">
+              <span className="font-sans text-[11px] uppercase tracking-[0.16em] font-semibold text-white/30">
                 Semesters
               </span>
 
-              <span className="font-sans text-[9px] text-white/20">
+              <span className="font-sans text-[11px] text-white/20">
                 {semesters.length}
               </span>
             </div>
@@ -726,7 +726,7 @@ export default function ProgrammeOverview({
             </div>
 
             <div className="mt-auto px-5 py-4 border-t border-white/[0.06]">
-              <p className="font-sans text-[8px] leading-relaxed text-white/20">
+              <p className="font-sans text-[11px] leading-relaxed text-white/20">
                 Select a semester to inspect
                 subjects and faculty assignments.
               </p>
@@ -763,7 +763,7 @@ export default function ProgrammeOverview({
                           py-2
                           rounded-lg
                           font-sans
-                          text-[9px]
+                          text-[12px]
                           font-semibold
                           ${
                             active
@@ -837,7 +837,7 @@ export default function ProgrammeOverview({
                           border
                           border-stone-200
                           font-sans
-                          text-[11px]
+                          text-[13px]
                           text-stone-800
                           placeholder:text-stone-400
                           outline-none
@@ -885,7 +885,7 @@ export default function ProgrammeOverview({
                 </>
               ) : (
                 <div className="flex-1 flex items-center justify-center">
-                  <p className="font-sans text-[11px] text-stone-400">
+                  <p className="font-sans text-[14px] text-stone-400">
                     Select a semester to view its
                     curriculum.
                   </p>
@@ -900,13 +900,13 @@ export default function ProgrammeOverview({
         ================================================= */}
 
         <footer className="shrink-0 h-9 px-6 md:px-9 bg-[#080808] border-t border-white/[0.07] flex items-center justify-between">
-          <span className="font-sans text-[9px] text-white/25">
+          <span className="font-sans text-[12px] text-white/25">
             {totalSubjects} subjects ·{" "}
             {semesters.length} semesters
           </span>
 
           <span
-            className={`font-sans text-[9px] font-medium ${
+            className={`font-sans text-[12px] font-medium ${
               unassignedSubjects > 0
                 ? "text-orange-400"
                 : "text-emerald-400"
